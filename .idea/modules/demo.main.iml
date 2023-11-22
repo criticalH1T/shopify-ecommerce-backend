@@ -3,18 +3,7 @@
   <component name="AdditionalModuleElements">
     <content url="file://$MODULE_DIR$/../../demo/build/generated/sources/annotationProcessor/java/main">
       <sourceFolder url="file://$MODULE_DIR$/../../demo/build/generated/sources/annotationProcessor/java/main" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../demo/build/generated/sources/annotationProcessor/java/main" isTestSource="false" generated="true" />
     </content>
-  </component>
-  <component name="FacetManager">
-    <facet type="jpa" name="JPA">
-      <configuration>
-        <setting name="validation-enabled" value="true" />
-        <setting name="provider-name" value="Hibernate" />
-        <datasource-mapping>
-          <factory-entry name="entityManagerFactory" value="52818c5b-1e8f-4c63-b0cd-cf5eb67f095f" />
-        </datasource-mapping>
-        <naming-strategy-map />
-      </configuration>
-    </facet>
   </component>
 </module>
