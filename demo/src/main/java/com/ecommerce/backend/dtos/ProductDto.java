@@ -1,6 +1,5 @@
 package com.ecommerce.backend.dtos;
 
-import com.ecommerce.backend.entities.Product;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Value;
@@ -9,11 +8,13 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * DTO for {@link Product}
+ * DTO for {@link com.ecommerce.backend.entities.Product}
  */
 @Value
 public class ProductDto implements Serializable {
     Integer id;
+    Integer categoryId;
+    String categoryCategoryName;
     @NotNull
     @Size(max = 30)
     String name;
