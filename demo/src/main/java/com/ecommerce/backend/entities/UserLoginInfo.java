@@ -1,8 +1,6 @@
 package com.ecommerce.backend.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +10,6 @@ import lombok.Setter;
 @Table(name = "user_login_info", indexes = {
         @Index(name = "email", columnList = "email", unique = true)
 })
-@Builder
-@AllArgsConstructor
 public class UserLoginInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +24,4 @@ public class UserLoginInfo {
 
     @OneToOne(mappedBy = "userLoginInfo")
     private User user;
-
-    public UserLoginInfo() {
-
-    }
 }
