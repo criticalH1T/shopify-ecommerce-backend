@@ -43,4 +43,8 @@ public class Recipe {
     @Column(name = "steps", nullable = false)
     private List<String> steps;
 
+    @NotNull
+    @Column(name = "image_path", nullable = false)
+    private String image_path;
+
 }

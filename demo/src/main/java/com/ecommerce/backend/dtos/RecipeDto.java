@@ -1,6 +1,5 @@
 package com.ecommerce.backend.dtos;
 
-import com.ecommerce.backend.dtos.ProductDto;
 import com.ecommerce.backend.entities.Recipe;
 import jakarta.validation.constraints.NotNull;
 import lombok.Value;
@@ -24,4 +23,7 @@ public class RecipeDto implements Serializable {
     List<String> ingredients;
     @NotNull
     List<String> steps;
+    @NotNull
+    String image_path;
+
 }
