@@ -4,8 +4,6 @@ import com.ecommerce.backend.dtos.UserLoginInfoDto;
 import com.ecommerce.backend.entities.UserLoginInfo;
 import com.ecommerce.backend.mappers.UserLoginInfoMapper;
 import com.ecommerce.backend.repositories.UserLoginInfoRepository;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
