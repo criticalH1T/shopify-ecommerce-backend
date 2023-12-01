@@ -4,8 +4,12 @@ import com.ecommerce.backend.dtos.UserLoginInfoDto;
 import com.ecommerce.backend.entities.UserLoginInfo;
 import com.ecommerce.backend.mappers.UserLoginInfoMapper;
 import com.ecommerce.backend.repositories.UserLoginInfoRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -30,5 +34,12 @@ public class UserLoginInfoController {
         return loginInfoList.stream()
                 .map(userLoginInfoMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{email}")
+    public UserLoginInfoDto getUserByEmail(@PathVariable String email) {
+        UserLoginInfo userLoginInfo = userLoginInfoRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+        return userLoginInfoMapper.toDto(userLoginInfo);
     }
 }

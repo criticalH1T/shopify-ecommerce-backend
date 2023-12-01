@@ -3,7 +3,7 @@
   <component name="JpaBuddyIdeaProjectConfig" migrateIndexesAndConstraints="true" newRepositoryParent="org.springframework.data.repository.CrudRepository">
     <option name="defaultUnitInitialized" value="true" />
     <option name="renamerInitialized" value="true" />
-    <option name="reverseEngineeringLastDbConnectionId" value="52818c5b-1e8f-4c63-b0cd-cf5eb67f095f" />
-    <option name="reLastEntityCreationPackage" value="demo/src/main/java/com/backendtryout/demo/entities" />
+    <option name="reverseEngineeringLastDbConnectionId" value="e45650d4-bdbb-4252-bedc-9001b7c7f4eb" />
+    <option name="reLastEntityCreationPackage" value="demo/src/main/java/com/ecommerce/backend/entities" />
   </component>
 </project>

@@ -11,3 +11,12 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+application:
+  security:
+    jwt:
+      secret-key: 0RreVLYdwmtbHj5wP8gkjUrqxPznlQtA4SECIXqPFLbRvSBUniXPkybxuN5E211
