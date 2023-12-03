@@ -4,7 +4,9 @@ import com.ecommerce.backend.dtos.RecipeDto;
 import com.ecommerce.backend.entities.Recipe;
 import com.ecommerce.backend.mappers.RecipeMapper;
 import com.ecommerce.backend.repositories.RecipeRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,5 +32,12 @@ public class RecipeController {
         return recipes.stream()
                 .map(recipeMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping(path = "/{id}")
+    public RecipeDto getRecipeById(@PathVariable Integer id) {
+        Recipe recipe = recipeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Recipe with id " + id + " not found."));
+        return recipeMapper.toDto(recipe);
     }
 }

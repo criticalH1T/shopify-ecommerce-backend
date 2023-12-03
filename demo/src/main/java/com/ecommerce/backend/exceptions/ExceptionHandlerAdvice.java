@@ -1,5 +1,6 @@
 package com.ecommerce.backend.exceptions;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,5 +15,12 @@ public class ExceptionHandlerAdvice {
     ExceptionResponse handleAuthenticationException(Exception ex) {
         return new ExceptionResponse(StatusCode.UNAUTHORIZED,
                 "Incorrect username or password.", ex.getMessage());
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    ExceptionResponse handleNotFoundException(Exception ex) {
+        return new ExceptionResponse(StatusCode.NOT_FOUND,
+                "Entity not found.", ex.getMessage());
     }
 }
