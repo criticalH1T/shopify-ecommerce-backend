@@ -4,6 +4,7 @@ import com.ecommerce.backend.dtos.CategoryDto;
 import com.ecommerce.backend.mappers.CategoryMapper;
 import com.ecommerce.backend.repositories.CategoryRepository;
 import com.ecommerce.backend.entities.Category;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +36,11 @@ public class CategoryController {
     }
 
     @GetMapping(path = "/categories/{id}")
-    public Optional<Category> findById(@PathVariable Integer id) { return categoryRepository.findById(id); }
+    public CategoryDto findById(@PathVariable Integer id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category with id " + id + " not found."));
+        return categoryMapper.toDto(category);
+    }
 
     @GetMapping
     @RequestMapping

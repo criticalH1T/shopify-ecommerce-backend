@@ -1,6 +1,7 @@
 package com.ecommerce.backend.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,5 +23,12 @@ public class ExceptionHandlerAdvice {
     ExceptionResponse handleNotFoundException(Exception ex) {
         return new ExceptionResponse(StatusCode.NOT_FOUND,
                 "Entity not found.", ex.getMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    ExceptionResponse handleUnauthorizedException(Exception ex) {
+        return new ExceptionResponse(StatusCode.CONFLICT,
+                "Username already taken.", ex.getMessage());
     }
 }
