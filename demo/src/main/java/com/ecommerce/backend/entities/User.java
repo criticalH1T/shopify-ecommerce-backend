@@ -2,8 +2,7 @@ package com.ecommerce.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -17,6 +16,9 @@ import java.util.Set;
         @Index(name = "Users_User_Login_Info_key", columnList = "user_login_info", unique = true)
 })
 @JsonIgnoreProperties({"userLoginInfo"})
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
