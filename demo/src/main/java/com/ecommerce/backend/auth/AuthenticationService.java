@@ -5,10 +5,11 @@ import com.ecommerce.backend.entities.UserLoginInfo;
 import com.ecommerce.backend.repositories.UserLoginInfoRepository;
 import com.ecommerce.backend.repositories.UserRepository;
 import com.ecommerce.backend.services.JwtService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,8 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request,
+                                               HttpServletResponse response) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -55,8 +57,13 @@ public class AuthenticationService {
         var user = userLoginInfoRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
         var jwtToken = jwtService.generateToken(user);
+        Cookie cookie = new Cookie("jwt", jwtToken);
+        cookie.setMaxAge(3 * 24 * 60 * 60); // 3 days
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .responseMessage("Authentication successful.")
                 .build();
     }
 }

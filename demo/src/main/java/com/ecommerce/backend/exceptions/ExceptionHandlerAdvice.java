@@ -1,5 +1,6 @@
 package com.ecommerce.backend.exceptions;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
