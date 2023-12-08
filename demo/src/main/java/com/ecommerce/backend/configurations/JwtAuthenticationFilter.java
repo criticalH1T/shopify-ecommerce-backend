@@ -34,12 +34,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         final String jwtToken = getJwtToken(request, true);
         final String userEmail;
-        final List<String> permittedUris = List.of("/api/v1/auth/authenticate", "/api/v1/auth/register");
+        final List<String> securedUris = List.of("/checkout");
 
         // if no token in auth header, call next filter chain method for permitted uris
         if (jwtToken == null) {
             String currentUri = request.getRequestURI();
-            if(permittedUris.contains(currentUri)) {
+            if(!securedUris.contains(currentUri)) {
                 filterChain.doFilter(request, response);
                 return;
             }

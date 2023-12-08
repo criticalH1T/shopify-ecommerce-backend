@@ -37,9 +37,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/api/v1/auth/**") // for develop change to api/v1/auth/**
+                        .requestMatchers("/**")
                         .permitAll()
-                        .anyRequest()
+                        .requestMatchers("/checkout")
                         .authenticated())
                 .exceptionHandling((configurer) -> configurer.authenticationEntryPoint(customAuthenticationEntryPoint))
                 .sessionManagement((smc) -> smc.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
