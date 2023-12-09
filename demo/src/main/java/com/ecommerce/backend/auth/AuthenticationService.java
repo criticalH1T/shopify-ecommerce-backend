@@ -2,6 +2,7 @@ package com.ecommerce.backend.auth;
 
 import com.ecommerce.backend.entities.User;
 import com.ecommerce.backend.entities.UserLoginInfo;
+import com.ecommerce.backend.exceptions.StatusCode;
 import com.ecommerce.backend.repositories.UserLoginInfoRepository;
 import com.ecommerce.backend.repositories.UserRepository;
 import com.ecommerce.backend.services.JwtService;
@@ -42,6 +43,7 @@ public class AuthenticationService {
         userLoginInfoRepository.save(userLoginInfo);
         userRepository.save(user);
         return RegisterResponse.builder()
+                .statusCode(StatusCode.SUCCESS)
                 .responseMessage("Registration successful.")
                 .build();
     }
@@ -63,6 +65,7 @@ public class AuthenticationService {
         cookie.setPath("/");
         response.addCookie(cookie);
         return AuthenticationResponse.builder()
+                .statusCode(StatusCode.SUCCESS)
                 .responseMessage("Authentication successful.")
                 .build();
     }
