@@ -36,7 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String userEmail;
         final List<String> securedUris = List.of("/checkout");
 
-        // if no token in auth header, call next filter chain method for permitted uris
+        // if no token in auth header, call next filter chain method
         if (jwtToken == null) {
             String currentUri = request.getRequestURI();
             if(!securedUris.contains(currentUri)) {

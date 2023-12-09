@@ -1,6 +1,5 @@
 package com.ecommerce.backend.exceptions;
 
-import io.jsonwebtoken.JwtException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -28,7 +27,7 @@ public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    ExceptionResponse handleUnauthorizedException(Exception ex) {
+    ExceptionResponse handleDataIntegrityException(Exception ex) {
         return new ExceptionResponse(StatusCode.CONFLICT,
                 "Username already taken.", ex.getMessage());
     }
