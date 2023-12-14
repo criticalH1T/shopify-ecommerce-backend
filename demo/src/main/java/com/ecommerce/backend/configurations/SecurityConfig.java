@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers("/**")
                         .permitAll()
-                        .requestMatchers("/checkout")
+                        .requestMatchers("/orders")
                         .authenticated())
                 .exceptionHandling((configurer) -> configurer.authenticationEntryPoint(customAuthenticationEntryPoint))
                 .sessionManagement((smc) -> smc.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
