@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.swing.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Getter
 @Setter
@@ -39,10 +40,9 @@ public class UserLoginInfo implements UserDetails {
     public UserLoginInfo() {
 
     }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
     }
 
     @Override

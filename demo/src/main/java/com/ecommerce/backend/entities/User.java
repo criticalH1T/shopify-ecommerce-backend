@@ -34,6 +34,9 @@ public class User {
     @Column(name = "address", length = Integer.MAX_VALUE)
     private String address;
 
+    @Column(name = "role", nullable = false, length = Integer.MAX_VALUE)
+    private String role;
+
     @OneToMany(mappedBy = "user")
     private Set<Order> orders = new LinkedHashSet<>();
 

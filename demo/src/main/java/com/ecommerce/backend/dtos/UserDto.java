@@ -15,5 +15,6 @@ public class UserDto implements Serializable {
     String firstName;
     String lastName;
     String address;
+    String role;
     Set<OrderDto> orders;
 }

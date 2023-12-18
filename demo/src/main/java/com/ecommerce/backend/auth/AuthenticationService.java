@@ -39,6 +39,7 @@ public class AuthenticationService {
                 .lastName(request.getLastName())
                 .address(request.getAddress())
                 .userLoginInfo(userLoginInfo)
+                .role("USER")
                 .build();
         userLoginInfoRepository.save(userLoginInfo);
         userRepository.save(user);

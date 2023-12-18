@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         final String jwtToken = getJwtToken(request, true);
         final String userEmail;
-        final List<String> securedUris = List.of("/orders");
+        final List<String> securedUris = List.of("/orders", "/users", "/admin");
         final String currentUri = request.getRequestURI();
 
         // if no token in auth header, call next filter chain method
@@ -44,21 +44,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
+        // if token is required but not supplied
         if (jwtToken == null) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.setContentType("application/json");
-            response.getWriter().write("{\"error\": \"Forbidden\", \"message\": \"Missing JWT token.\"}");
+            SecurityContextHolder.clearContext();
+            setForbiddenResponse(response, "Missing JWT token.");
             return;
         }
 
-        // extract userEmail from JWT token
+        // extract userEmail from JWT token (if token not expired)
         try {
             userEmail = jwtService.extractUsername(jwtToken);
-
         } catch (ExpiredJwtException ex) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.setContentType("application/json");
-            response.getWriter().write("{\"error\": \"Forbidden\", \"message\": \"JWT expired.\"}");
+            SecurityContextHolder.clearContext();
+            setForbiddenResponse(response, "JWT expired.");
             return;
         }
 
@@ -76,8 +74,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
-            filterChain.doFilter(request, response);
         }
+        filterChain.doFilter(request, response);
     }
 
     private String getJwtFromRequest(HttpServletRequest request) {
@@ -105,5 +103,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private String getJwtToken(HttpServletRequest request, boolean fromCookie) {
         if (fromCookie) return getJwtFromCookie(request);
         return getJwtFromRequest(request);
+    }
+
+    private void setForbiddenResponse(HttpServletResponse response, String message) throws IOException {
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.setContentType("application/json");
+        response.getWriter().write("{\"error\": \"Forbidden\", \"message\": \"" + message + "\"}");
     }
 }

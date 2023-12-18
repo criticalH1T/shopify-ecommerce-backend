@@ -36,5 +36,4 @@ public class Order {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_id")
     private User user;
-
 }
