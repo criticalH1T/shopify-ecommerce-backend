@@ -2,8 +2,7 @@ package com.ecommerce.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -16,6 +15,9 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "orders")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties({"orderItems", "user"})
 public class Order {
     @Id
