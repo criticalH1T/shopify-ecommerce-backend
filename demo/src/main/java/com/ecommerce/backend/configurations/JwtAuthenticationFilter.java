@@ -1,5 +1,6 @@
 package com.ecommerce.backend.configurations;
 
+import com.ecommerce.backend.services.CookieService;
 import com.ecommerce.backend.services.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.micrometer.common.lang.NonNull;
@@ -28,12 +29,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
 
+    private final CookieService cookieService;
+
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain)
             throws ServletException, IOException {
-        final String jwtToken = getJwtToken(request, true);
+        final String jwtToken = cookieService.getJwtToken(request, true);
         final String userEmail;
         final List<String> securedUris = List.of("/orders", "/users", "/admin");
         final String currentUri = request.getRequestURI();
@@ -78,16 +81,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private String getJwtFromRequest(HttpServletRequest request) {
-        final String authHeader = request.getHeader("Authorization");
-        // if authHeader does not contain bearer token, return null to indicate that next filter needs to be called
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            return null;
-        }
-        else {
-            return authHeader.substring(7);
-        }
-    }
 
     private String getJwtFromCookie(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();

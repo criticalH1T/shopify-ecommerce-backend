@@ -4,9 +4,7 @@ import com.ecommerce.backend.dtos.OrderDto;
 import com.ecommerce.backend.entities.Order;
 import com.ecommerce.backend.mappers.OrderMapper;
 import com.ecommerce.backend.repositories.OrderRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
