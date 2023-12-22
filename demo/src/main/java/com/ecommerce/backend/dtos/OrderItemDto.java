@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Value
 public class OrderItemDto implements Serializable {
     Integer id;
-    OrderDto order;
+//    OrderDto order;
     Integer quantity;
     BigDecimal subtotal;
     ProductDto product;

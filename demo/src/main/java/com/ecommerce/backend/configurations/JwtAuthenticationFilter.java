@@ -6,7 +6,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.micrometer.common.lang.NonNull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -79,23 +78,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
-    }
-
-
-    private String getJwtFromCookie(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies == null) return null;
-        for (Cookie cookie : cookies) {
-            if(cookie.getName().equals("jwt")) {
-                return cookie.getValue();
-            }
-        }
-        return null;
-    }
-
-    private String getJwtToken(HttpServletRequest request, boolean fromCookie) {
-        if (fromCookie) return getJwtFromCookie(request);
-        return getJwtFromRequest(request);
     }
 
     private void setForbiddenResponse(HttpServletResponse response, String message) throws IOException {
