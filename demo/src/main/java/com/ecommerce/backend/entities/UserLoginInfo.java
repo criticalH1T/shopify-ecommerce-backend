@@ -34,7 +34,7 @@ public class UserLoginInfo implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToOne(mappedBy = "userLoginInfo")
+    @OneToOne(mappedBy = "userLoginInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
 
     public UserLoginInfo() {

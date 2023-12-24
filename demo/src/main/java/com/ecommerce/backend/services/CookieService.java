@@ -3,9 +3,9 @@ package com.ecommerce.backend.services;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class CookieService {
     public String getJwtFromRequest(HttpServletRequest request) {

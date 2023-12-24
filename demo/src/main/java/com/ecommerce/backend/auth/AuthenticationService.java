@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -57,9 +60,12 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = userLoginInfoRepository.findByEmail(request.getEmail())
+        UserLoginInfo userLoginInfo = userLoginInfoRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found."));
-        var jwtToken = jwtService.generateToken(user);
+        Map<String, Integer> extraClaims = new HashMap<>();
+        Integer userId = userLoginInfo.getUser().getUserId();
+        extraClaims.put("userId", userId);
+        var jwtToken = jwtService.generateToken(extraClaims, userLoginInfo);
         Cookie cookie = new Cookie("jwt", jwtToken);
         cookie.setMaxAge(3 * 24 * 60 * 60); // 3 days
         cookie.setHttpOnly(true);
