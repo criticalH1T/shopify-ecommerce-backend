@@ -2,7 +2,10 @@ package com.ecommerce.backend.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -12,6 +15,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "recipes", indexes = {
         @Index(name = "recipes_product_id_key", columnList = "product_id", unique = true)
 })
@@ -21,7 +27,6 @@ public class Recipe {
     @Column(name = "recipe_id", nullable = false)
     private Integer id;
 
-    @NotNull
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "product_id", nullable = false)
