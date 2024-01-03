@@ -13,7 +13,6 @@ import com.ecommerce.backend.services.CookieService;
 import com.ecommerce.backend.services.JwtService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +23,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/")
-@Slf4j
 public class OrderItemController {
 
     private final OrderItemRepository orderItemRepository;
@@ -55,8 +53,6 @@ public class OrderItemController {
 
     @PostMapping("/order_items")
     public void addOrder(@RequestBody List<OrderRequest> orderRequest, HttpServletRequest request) {
-        log.info(orderRequest.toString());
-        log.info(request.toString());
         String jwt = cookieService.getJwtFromCookie(request);
         String userEmail = jwtService.extractUsername(jwt);
         UserLoginInfo userLoginInfo = userLoginInfoRepository.findByEmail(userEmail)
