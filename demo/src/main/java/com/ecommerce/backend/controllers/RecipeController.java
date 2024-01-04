@@ -9,9 +9,7 @@ import com.ecommerce.backend.mappers.RecipeMapper;
 import com.ecommerce.backend.repositories.ProductRepository;
 import com.ecommerce.backend.repositories.RecipeRepository;
 import com.ecommerce.backend.requests.RecipeRequest;
-
 import jakarta.persistence.EntityNotFoundException;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -72,13 +71,13 @@ public class RecipeController {
                     .responseMessage("Recipe with id " + id + " not found.")
                     .status(StatusCode.NOT_FOUND)
                     .build();
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(404).body(response);
         } catch (Exception e) {
             GenericResponse response = GenericResponse.builder()
                     .responseMessage("Error deleting recipe with id: " + id)
                     .status(StatusCode.INTERNAL_SERVER_ERROR)
                     .build();
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(500).body(response);
         }
     }
 
@@ -89,9 +88,12 @@ public class RecipeController {
             Recipe existingRecipe = recipeRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Recipe with id " + id + " not found."));
 
-            Product product = productRepository.findById(updatedRecipe.getProduct().getId())
-                    .orElseThrow(() -> new EntityNotFoundException(
-                            "Product with id " + updatedRecipe.getProduct().getId() + "not found."));
+            Product product = null;
+            if (!Objects.equals(updatedRecipe.getProductId(), null)) {
+                product = productRepository.findById(updatedRecipe.getProductId())
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                "Product with id " + updatedRecipe.getProductId() + "not found."));
+            }
 
             existingRecipe.setDescription(updatedRecipe.getDescription());
             existingRecipe.setName(updatedRecipe.getName());
@@ -112,22 +114,22 @@ public class RecipeController {
                     .responseMessage("Recipe with id " + id + " not found.")
                     .status(StatusCode.NOT_FOUND)
                     .build();
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(404).body(response);
         } catch (Exception e) {
             GenericResponse response = GenericResponse.builder()
                     .responseMessage("Error updating recipe with id: " + id)
                     .status(StatusCode.INTERNAL_SERVER_ERROR)
                     .build();
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(500).body(response);
         }
     }
 
     @PostMapping
     public ResponseEntity<GenericResponse> createRecipe(@RequestBody RecipeRequest createdRecipe) {
         try {
-            Product product = productRepository.findById(createdRecipe.getProduct().getId())
+            Product product = productRepository.findById(createdRecipe.getProductId())
                     .orElseThrow(() -> new EntityNotFoundException(
-                            "Product with id " + createdRecipe.getProduct().getId() + "not found."));
+                            "Product with id " + createdRecipe.getProductId() + "not found."));
 
             Recipe newRecipe = Recipe.builder()
                     .description(createdRecipe.getDescription())
@@ -149,7 +151,7 @@ public class RecipeController {
                     .responseMessage("Error creating recipe")
                     .status(StatusCode.INTERNAL_SERVER_ERROR)
                     .build();
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(500).body(response);
         }
     }
 }

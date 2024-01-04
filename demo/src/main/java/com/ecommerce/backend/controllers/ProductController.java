@@ -9,11 +9,7 @@ import com.ecommerce.backend.mappers.ProductMapper;
 import com.ecommerce.backend.repositories.CategoryRepository;
 import com.ecommerce.backend.repositories.ProductRepository;
 import com.ecommerce.backend.requests.ProductRequest;
-
 import jakarta.persistence.EntityNotFoundException;
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +25,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/")
-@Slf4j
 public class ProductController {
 
     private final ProductRepository productRepository;
@@ -82,13 +77,13 @@ public class ProductController {
                     .responseMessage("Product with id " + id + " not found.")
                     .status(StatusCode.NOT_FOUND)
                     .build();
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(404).body(response);
         } catch (Exception e) {
             GenericResponse response = GenericResponse.builder()
                     .responseMessage("Error deleting product with id: " + id)
                     .status(StatusCode.INTERNAL_SERVER_ERROR)
                     .build();
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(500).body(response);
         }
     }
 
@@ -123,20 +118,19 @@ public class ProductController {
                     .responseMessage("Product with id " + id + " not found.")
                     .status(StatusCode.NOT_FOUND)
                     .build();
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(404).body(response);
         } catch (Exception e) {
             GenericResponse response = GenericResponse.builder()
                     .responseMessage("Error updating product with id: " + id)
                     .status(StatusCode.INTERNAL_SERVER_ERROR)
                     .build();
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(500).body(response);
         }
     }
 
     @PostMapping(path = "/products")
     public ResponseEntity<GenericResponse> createProduct(@RequestBody ProductRequest createdProduct) {
         try {
-
             Category category = categoryRepository.findById(createdProduct.getCategoryId())
                     .orElseThrow(() -> new EntityNotFoundException(
                             "Category with id " + createdProduct.getCategoryId() + "not found."));
@@ -163,7 +157,7 @@ public class ProductController {
                     .responseMessage("Error creating product")
                     .status(StatusCode.INTERNAL_SERVER_ERROR)
                     .build();
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(500).body(response);
         }
     }
 }

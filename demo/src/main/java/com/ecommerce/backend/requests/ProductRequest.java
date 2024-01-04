@@ -1,5 +1,6 @@
 package com.ecommerce.backend.requests;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,8 +13,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductRequest {
-    private int categoryId;
+    @JsonProperty("category")
+    private Integer categoryId;
     private String description;
+    @JsonProperty("productImage")
     private String imageUrl;
     private String name;
     private BigDecimal price;

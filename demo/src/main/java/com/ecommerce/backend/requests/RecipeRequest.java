@@ -1,5 +1,6 @@
 package com.ecommerce.backend.requests;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +17,10 @@ import com.ecommerce.backend.entities.Product;
 public class RecipeRequest {
     private String description;
     private String name;
+    @JsonProperty("recipeImage")
     private String image_path;
     private List<String> ingredients;
-    private Product product;
+    @JsonProperty("product")
+    private Integer productId;
     private List<String> steps;
 }

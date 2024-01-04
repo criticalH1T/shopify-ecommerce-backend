@@ -58,6 +58,7 @@ public class Product {
     @Column(name = "volume", nullable = false)
     private Integer volume;
 
+    @NotNull
     @Column(name = "image_url", length = Integer.MAX_VALUE)
     private String imageUrl;
 

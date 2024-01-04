@@ -8,7 +8,6 @@ import com.ecommerce.backend.mappers.UserMapper;
 import com.ecommerce.backend.repositories.UserRepository;
 import com.ecommerce.backend.services.JwtService;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/")
-@Slf4j
 public class UserController {
 
     private final UserRepository userRepository;
@@ -51,8 +49,8 @@ public class UserController {
         // if active admin is trying to change his role to a user
         if (Objects.equals(jwtUserId, user.getUserId())) {
             GenericResponse response = GenericResponse.builder()
-                    .responseMessage("Cannot change active user's role to USER as" +
-                            " doing this would result in not being able to access the admin dashboard")
+                    .responseMessage("You cannot change your role to USER as" +
+                            " doing this would remove your access to the admin dashboard")
                     .status(StatusCode.CONFLICT)
                     .build();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
