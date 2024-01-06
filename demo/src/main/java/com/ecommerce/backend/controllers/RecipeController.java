@@ -127,9 +127,12 @@ public class RecipeController {
     @PostMapping
     public ResponseEntity<GenericResponse> createRecipe(@RequestBody RecipeRequest createdRecipe) {
         try {
-            Product product = productRepository.findById(createdRecipe.getProductId())
-                    .orElseThrow(() -> new EntityNotFoundException(
-                            "Product with id " + createdRecipe.getProductId() + "not found."));
+            Product product = null;
+            if(!Objects.equals(createdRecipe.getProductId(), null)) {
+                product = productRepository.findById(createdRecipe.getProductId())
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                "Product with id " + createdRecipe.getProductId() + "not found."));
+            }
 
             Recipe newRecipe = Recipe.builder()
                     .description(createdRecipe.getDescription())
