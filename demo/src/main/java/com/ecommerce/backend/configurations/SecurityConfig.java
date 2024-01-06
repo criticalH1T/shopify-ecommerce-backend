@@ -38,7 +38,7 @@ public class SecurityConfig {
                         .requestMatchers("/users", "/admin").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/**")
                         .permitAll()
-                        .requestMatchers("/orders")
+                        .requestMatchers("/orders","/cookies")
                         .authenticated())
                 .exceptionHandling((configurer) -> configurer.authenticationEntryPoint(customAuthenticationEntryPoint))
                 .sessionManagement((smc) -> smc.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

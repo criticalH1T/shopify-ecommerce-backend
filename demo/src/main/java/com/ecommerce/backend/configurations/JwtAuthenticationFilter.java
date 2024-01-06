@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         final String jwtToken = cookieService.getJwtToken(request, true);
         final String userEmail;
-        final List<String> securedUris = List.of("/orders", "/users", "/admin");
+        final List<String> securedUris = List.of("/orders", "/users", "/admin","/cookies");
         final String currentUri = request.getRequestURI();
 
         // if no token in auth header, call next filter chain method
