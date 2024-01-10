@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="JpaBuddyIdeaProjectConfig" migrateIndexesAndConstraints="true" newRepositoryParent="org.springframework.data.repository.CrudRepository">
-    <option name="defaultUnitInitialized" value="true" />
-    <option name="renamerInitialized" value="true" />
-    <option name="reverseEngineeringLastDbConnectionId" value="e45650d4-bdbb-4252-bedc-9001b7c7f4eb" />
-    <option name="reLastEntityCreationPackage" value="demo/src/main/java/com/ecommerce/backend/entities" />
-  </component>
-</project>
