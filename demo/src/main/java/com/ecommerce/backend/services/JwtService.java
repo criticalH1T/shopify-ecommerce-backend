@@ -17,11 +17,15 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-//    @Value("${application.security.jwt.secret-key}")
-    private static final String SECRET_KEY = "0RreVLYdwmtbHj5wP8gkjUrqxPznlQtA4SECIXqPFLbRvSBUniXPkybxuN5E211";
-
+    @Value("${application.security.jwt.secret-key}")
+    private String SECRET_KEY;
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+
+    public String extractUserId(String token) {
+        final Claims claims = extractAllClaims(token);
+        return claims.get("userId").toString();
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -33,13 +37,13 @@ public class JwtService {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    public String generateToken(Map<String, Object> extraClaims,
+    public String generateToken(Map<String, Integer> extraClaims,
                                  UserDetails userDetails) {
         return Jwts.builder()
                 .claims(extraClaims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24 * 72))
                 .signWith(getSignInKey(), Jwts.SIG.HS256)
                 .compact();
     }

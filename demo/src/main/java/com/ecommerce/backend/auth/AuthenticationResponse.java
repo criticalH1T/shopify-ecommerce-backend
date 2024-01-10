@@ -12,5 +12,6 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticationResponse {
-    private String token;
+    private String responseMessage;
+    private int statusCode;
 }

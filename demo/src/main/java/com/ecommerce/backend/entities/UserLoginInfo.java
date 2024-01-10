@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.swing.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,16 +34,15 @@ public class UserLoginInfo implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToOne(mappedBy = "userLoginInfo")
+    @OneToOne(mappedBy = "userLoginInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
 
     public UserLoginInfo() {
 
     }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
     }
 
     @Override

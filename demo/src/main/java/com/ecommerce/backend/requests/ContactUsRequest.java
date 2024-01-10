@@ -1,4 +1,4 @@
-package com.ecommerce.backend.auth;
+package com.ecommerce.backend.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
-
+public class ContactUsRequest {
+    private String name;
     private String email;
-
-    private String password;
+    private String comment;
 }

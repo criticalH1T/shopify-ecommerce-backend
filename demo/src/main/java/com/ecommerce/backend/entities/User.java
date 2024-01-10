@@ -2,8 +2,7 @@ package com.ecommerce.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -17,11 +16,14 @@ import java.util.Set;
         @Index(name = "Users_User_Login_Info_key", columnList = "user_login_info", unique = true)
 })
 @JsonIgnoreProperties({"userLoginInfo"})
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
-    private Integer user_id;
+    private Integer userId;
 
     @Column(name = "first_name", nullable = false, length = Integer.MAX_VALUE)
     private String firstName;
@@ -32,10 +34,13 @@ public class User {
     @Column(name = "address", length = Integer.MAX_VALUE)
     private String address;
 
+    @Column(name = "role", nullable = false, length = Integer.MAX_VALUE)
+    private String role;
+
     @OneToMany(mappedBy = "user")
     private Set<Order> orders = new LinkedHashSet<>();
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "user_login_info", nullable = false)
     private UserLoginInfo userLoginInfo;

@@ -11,9 +11,10 @@ import java.util.Set;
  */
 @Value
 public class UserDto implements Serializable {
-    Integer user_id;
+    Integer userId;
     String firstName;
     String lastName;
     String address;
+    String role;
     Set<OrderDto> orders;
 }
