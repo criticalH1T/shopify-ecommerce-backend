@@ -67,7 +67,7 @@ public class AuthenticationService {
         extraClaims.put("userId", userId);
         var jwtToken = jwtService.generateToken(extraClaims, userLoginInfo);
         Cookie cookie = new Cookie("jwt", jwtToken);
-        cookie.setMaxAge(3 * 24 * 60 * 60); // 3 days
+        cookie.setMaxAge(3600); // 1 hour
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         response.addCookie(cookie);
