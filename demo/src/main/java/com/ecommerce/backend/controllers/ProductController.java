@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/products")
 public class ProductController {
 
     private final ProductRepository productRepository;
@@ -38,7 +38,7 @@ public class ProductController {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("/products")
+    @GetMapping
     public List<ProductDto> getAllProducts() {
         List<Product> productList = productRepository.findAll();
         return productList.stream()
@@ -46,7 +46,7 @@ public class ProductController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(path = "/products/{id}")
+    @GetMapping(path = "/{id}")
     public ProductDto findById(@PathVariable Integer id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found."));
@@ -61,7 +61,7 @@ public class ProductController {
         return productMapper.toDto(product);
     }
 
-    @DeleteMapping(path = "/products/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<GenericResponse> deleteProductById(@PathVariable Integer id) {
         try {
             Product product = productRepository.findById(id)

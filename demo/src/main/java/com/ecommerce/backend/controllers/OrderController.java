@@ -5,28 +5,26 @@ import com.ecommerce.backend.entities.Order;
 import com.ecommerce.backend.mappers.OrderMapper;
 import com.ecommerce.backend.mappers.OrderWithItemsMapper;
 import com.ecommerce.backend.repositories.OrderRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/orders")
 public class OrderController {
 
     private final OrderRepository orderRepository;
-    private final OrderMapper orderMapper;
-
     private final OrderWithItemsMapper orderWithItemsMapper;
 
     public OrderController(OrderRepository orderRepository,
                            OrderMapper orderMapper, OrderWithItemsMapper orderWithItemsMapper) {
         this.orderRepository = orderRepository;
-        this.orderMapper = orderMapper;
         this.orderWithItemsMapper = orderWithItemsMapper;
     }
 
-    @GetMapping("/orders")
+    @GetMapping
     public List<OrderWithItemsDto> getAllOrders() {
         List<Order> ordersList = orderRepository.findAll();
         return ordersList.stream()

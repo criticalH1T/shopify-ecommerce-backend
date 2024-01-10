@@ -4,6 +4,7 @@ import com.ecommerce.backend.auth.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,10 +36,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/users", "/admin").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/users", "/orders", "/admin").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/**")
                         .permitAll()
-                        .requestMatchers("/orders","/cookies")
+                        .requestMatchers("/cookies")
                         .authenticated())
                 .exceptionHandling((configurer) -> configurer.authenticationEntryPoint(customAuthenticationEntryPoint))
                 .sessionManagement((smc) -> smc.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -51,9 +52,9 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+        configuration.setAllowedOrigins(List.of("http://localhost:4200", "http://localhost:80", "http://ecommerce-frontend:80"));
         configuration.setAllowedMethods(List.of("*"));
-        configuration.setAllowedHeaders(List.of("*")); // alternatively set *
+        configuration.setAllowedHeaders(List.of("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

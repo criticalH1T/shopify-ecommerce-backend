@@ -1,11 +1,53 @@
-# ECommerce Frontend
+# Ecommerce Backend
 
 ## Overview
 Welcome to our e-commerce platform, a comprehensive solution for online shopping that combines a user-friendly interface with robust functionality. This project is designed to emulate the seamless experience of popular e-commerce websites while offering additional features for both users and administrators.
 
 ## Configuration
 
+This project requires Java 17 and PostgreSQL 16.1.
+
+**Step 1:** Clone the project:
+
+`git clone https://github.com/criticalH1T/shopify-ecommerce-backend`
+
+**Step 2:** Navigate to the demo directory to find the `ecommerce_db.sql` file:
+
+`cd shopify-ecommerce-backend/demo`
+
+**Step 3:** Create database:
+
+`psql -U [your-username] -h localhost -p 5432 -f ecommerce-db.sql`
+
+This should create the `ecommerce` database and populate it with some mock data.
+
+**Please make sure to update your username and password in the `application.yml` file.**
+
+To do this you need to edit the following code in application.yml:
+
+    url: jdbc:postgresql://localhost:5432/ecommerce
+    username: [your-username]
+    password: [your-password]
+
+**Step 4:** Build and run:
+
+`./gradlew build`
+
+`java -jar build/libs/demo-0.0.1-SNAPSHOT.jar`
+
 ## Endpoints
+
+The API is documented using OpenAPI (Swagger). After you've run the application,
+you can access the OpenAPI documentation on the following link:
+
+[OpenAPI Documentation](http://localhost:8080/swagger-ui/index.html#/)
+
+**Important note:**
+
+As of now, OpenAPI still has no support for authentication using http-only cookies,
+so if you want to access secured endpoints, please make sure to hit the `/authenticate` endpoint first.
+The credentials for it are given in its description.
+
 
 ## Authentication
 
@@ -116,17 +158,17 @@ By combining JWT and HTTP-only cookies, we establish a secure and efficient auth
     - Angular HttpClient for making API requests
 
 - **Backend:**
-  - Framework: Java with Spring Boot
+  - Framework: Spring Boot
   - Build Tool: Gradle
   - Java Version: 17
   - Key Dependencies:
     - Spring Boot Starter Data JPA
     - Spring Boot Starter Web
-    - Lombok
-    - PostgreSQL
     - Spring Boot Starter Validation
     - Spring Boot Starter Security
     - Spring Boot Starter Test
+    - Lombok
+    - PostgreSQL
     - MapStruct 
     - JWT API 
     - Spring Boot Configuration Processor
@@ -136,6 +178,5 @@ By combining JWT and HTTP-only cookies, we establish a secure and efficient auth
 
 ## How to Contribute:
 
-We welcome contributions from the community to enhance and improve our e-commerce platform. Please refer to the [Contribution Guidelines](link/to/contribution/guidelines) for more information on how you can get involved.
-
+We welcome contributions from the community to enhance and improve our e-commerce platform.
 Thank you for exploring our e-commerce platform. We hope you enjoy the shopping experience!

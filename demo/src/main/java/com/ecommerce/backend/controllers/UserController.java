@@ -7,6 +7,7 @@ import com.ecommerce.backend.exceptions.StatusCode;
 import com.ecommerce.backend.mappers.UserMapper;
 import com.ecommerce.backend.repositories.UserRepository;
 import com.ecommerce.backend.services.JwtService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserRepository userRepository;
@@ -33,7 +34,7 @@ public class UserController {
         this.jwtService = jwtService;
     }
 
-    @GetMapping("/users")
+    @GetMapping
     public List<UserDto> getAllUsers() {
         List<User> userList = userRepository.findAll(Sort.by(Sort.Direction.ASC, "userId"));
         return userList.stream()
@@ -41,7 +42,7 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @PatchMapping("/users/{userId}")
+    @PatchMapping("/{userId}")
     public ResponseEntity<GenericResponse> SwitchUserRole(@PathVariable Integer userId,
                                                           @CookieValue(name = "jwt") String jwt) {
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found."));
@@ -66,7 +67,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/users/{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<GenericResponse> DeleteUser(@PathVariable Integer userId) {
         if (userRepository.existsById(userId)) {
             userRepository.deleteById(userId);

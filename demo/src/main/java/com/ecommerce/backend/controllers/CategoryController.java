@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "/")
+@RequestMapping(path = "/categories")
 public class CategoryController {
 
     private final CategoryRepository categoryRepository;
@@ -27,7 +27,7 @@ public class CategoryController {
         this.categoryMapper = categoryMapper;
     }
 
-    @GetMapping("/categories")
+    @GetMapping
     public List<CategoryDto> getAllCategories() {
         List<Category> categoryList = categoryRepository.findAll();
         return categoryList.stream()
@@ -35,16 +35,10 @@ public class CategoryController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping(path = "/categories/{id}")
+    @GetMapping(path = "/{id}")
     public CategoryDto findById(@PathVariable Integer id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category with id " + id + " not found."));
         return categoryMapper.toDto(category);
-    }
-
-    @GetMapping
-    @RequestMapping
-    public String hello_repository() {
-        return "Hello Repository!";
     }
 }

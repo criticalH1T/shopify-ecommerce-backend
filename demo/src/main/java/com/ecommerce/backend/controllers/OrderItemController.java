@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/order_items")
 public class OrderItemController {
 
     private final OrderItemRepository orderItemRepository;
@@ -43,7 +43,7 @@ public class OrderItemController {
         this.orderRepository = orderRepository;
     }
 
-    @GetMapping("/order_items")
+    @GetMapping
     public List<OrderItemDto> getAllProducts() {
         List<OrderItem> orderItemList = orderItemRepository.findAll();
         return orderItemList.stream()
@@ -51,7 +51,7 @@ public class OrderItemController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/order_items")
+    @PostMapping
     public void addOrder(@RequestBody List<OrderRequest> orderRequest, HttpServletRequest request) {
         String jwt = cookieService.getJwtFromCookie(request);
         String userEmail = jwtService.extractUsername(jwt);

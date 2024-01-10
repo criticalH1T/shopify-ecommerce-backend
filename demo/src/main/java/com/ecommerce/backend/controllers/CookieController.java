@@ -2,6 +2,7 @@ package com.ecommerce.backend.controllers;
 
 import com.ecommerce.backend.auth.GenericResponse;
 import com.ecommerce.backend.exceptions.StatusCode;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
