@@ -87,7 +87,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping(path = "/products/{id}")
+    @PutMapping(path = "/{id}")
     public ResponseEntity<GenericResponse> updateProductById(@PathVariable Integer id,
             @RequestBody ProductRequest updatedProduct) {
 
@@ -128,7 +128,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping(path = "/products")
+    @PostMapping
     public ResponseEntity<GenericResponse> createProduct(@RequestBody ProductRequest createdProduct) {
         try {
             Category category = categoryRepository.findById(createdProduct.getCategoryId())
