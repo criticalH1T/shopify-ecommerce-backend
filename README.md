@@ -9,15 +9,21 @@ This project requires Java 17 and PostgreSQL 16.1.
 
 **Step 1:** Clone the project:
 
-`git clone https://github.com/criticalH1T/shopify-ecommerce-backend`
+```bash
+git clone https://github.com/criticalH1T/shopify-ecommerce-backend
+```
 
 **Step 2:** Navigate to the demo directory to find the `ecommerce_db.sql` file:
 
-`cd shopify-ecommerce-backend/demo`
+```bash
+cd shopify-ecommerce-backend/demo
+```
 
 **Step 3:** Create database:
 
-`psql -U [your-username] -h localhost -p 5432 -f ecommerce-db.sql`
+```bash
+psql -U [your-username] -h localhost -p 5432 -f ecommerce-db.sql
+```
 
 This should create the `ecommerce` database and populate it with some mock data.
 
@@ -31,9 +37,13 @@ To do this you need to edit the following code in application.yml:
 
 **Step 4:** Build and run:
 
-`./gradlew build`
+```bash
+./gradlew build
+```
 
-`java -jar build/libs/demo-0.0.1-SNAPSHOT.jar`
+```bash
+java -jar build/libs/demo-0.0.1-SNAPSHOT.jar
+```
 
 ## Endpoints
 
